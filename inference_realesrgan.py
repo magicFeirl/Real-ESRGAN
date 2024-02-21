@@ -1,3 +1,5 @@
+import shutil
+
 import argparse
 import cv2
 import glob
@@ -132,6 +134,12 @@ def main():
 
     for idx, path in enumerate(paths):
         imgname, extension = os.path.splitext(os.path.basename(path))
+        save_path = os.path.join(args.output, f'{imgname}.{extension}')
+
+        if extension == '.txt':
+            shutil.copy(path, save_path)
+            continue
+
         print('Testing', idx, imgname)
 
         img = cv2.imread(path, cv2.IMREAD_UNCHANGED)
@@ -155,12 +163,16 @@ def main():
                 extension = args.ext
             if img_mode == 'RGBA':  # RGBA images should be saved in png format
                 extension = 'png'
-            if args.suffix == '':
-                save_path = os.path.join(args.output, f'{imgname}.{extension}')
-            else:
-                save_path = os.path.join(args.output, f'{imgname}_{args.suffix}.{extension}')
+            # if args.suffix == '':
+            #     save_path = os.path.join(args.output, f'{imgname}.{extension}')
+            # else:
+            #     # save_path = os.path.join(args.output, f'{imgname}_{args.suffix}.{extension}')
+            #     # no shuffix by default
+            #     save_path = os.path.join(args.output, f'{imgname}.{extension}')
             cv2.imwrite(save_path, output)
 
 
 if __name__ == '__main__':
     main()
+
+
