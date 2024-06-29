@@ -134,7 +134,7 @@ def main():
 
     for idx, path in enumerate(paths):
         imgname, extension = os.path.splitext(os.path.basename(path))
-        save_path = os.path.join(args.output, f'{imgname}.{extension}')
+        save_path = os.path.join(args.output, f'{imgname}{extension}')
 
         if extension == '.txt':
             shutil.copy(path, save_path)
